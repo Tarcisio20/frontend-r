@@ -14,7 +14,7 @@ export async  function middleware(request : NextRequest){
     const path = request.nextUrl.pathname
     const publicRoute = publicRoutes.find(route => route.path === path)
 
-    const authToken = request.cookies.get('tokenSystemCredNosso')
+    const authToken = request.cookies.get('tokenRV2Adm')
     
     if(!authToken && publicRoute) {
         return NextResponse.next()
@@ -38,7 +38,7 @@ export async  function middleware(request : NextRequest){
     if(authToken && !publicRoute) {
         if(!authToken){
             const response = NextResponse.redirect(new URL("/", request.url))
-            response.cookies.delete('tokenSystemCredNosso')
+            response.cookies.delete('tokenRV2Adm')
             return response
         }
         return NextResponse.next()    
@@ -56,6 +56,7 @@ export const config : MiddlewareConfig = {
         * - _next/image (image optimization files)
         * - favicon.ico, sitemap.xml, robots.txt (metadata files)
         */
-        '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+       // '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+       '/((?!api|_next/|favicon.ico|sitemap.xml|robots.txt|.*\\.png$|.*\\.jpg$|.*\\.jpeg$|.*\\.webp$|.*\\.svg$).*)',
     ]
 }
